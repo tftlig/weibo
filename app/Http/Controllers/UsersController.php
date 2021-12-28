@@ -8,6 +8,23 @@ use Auth;
 
 class UsersController extends Controller
 {
+
+    // 使用身份验证（Auth）中间件，过滤未登录用户，执行编辑、更新个人中心动作
+    // __construct 是PHP的构造器方法，当一个类对象被创建之前，该方法将会被调用
+    // except方法，指定动作不使用Auth中间件过滤
+    // 8.3章
+    public function __construct(){
+        $this->middleware('auth',[
+            'except' => ['show','create','store']
+        ]);
+
+        // 用 Auth 中间件提供的 guest 选项，指定一些只允许未登录用户访问的动作
+        // 8.3章
+        $this->middleware('guest',[
+            'only' => ['create']
+        ]);
+    }
+
     // 展示注册页面
     // 4.7章，6.2章
     public function create(){
@@ -23,8 +40,7 @@ class UsersController extends Controller
     // 验证注册信息，保存注册信息到数据库
     // 注册后自动登录,显示欢迎信息，和重新到个人中心
     // 6.6章
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $this->validate($request, [
             'name' => 'required|unique:users|max:50',
             'email' => 'required|email|unique:users|max:255',
@@ -45,6 +61,8 @@ class UsersController extends Controller
     // 编辑用户个人信息页面
     // 8.2章
     public function edit(User $user){
+
+        $this->authorize('update',$user);
         return view('users.edit',compact('user'));
     }
 
@@ -52,6 +70,7 @@ class UsersController extends Controller
     //8.2章
     public function update(User $user,Request $request){
 
+        $this->authorize('update',$user);
         $this->validate($request,[
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
@@ -77,3 +96,5 @@ class UsersController extends Controller
     }
 
 }
+
+

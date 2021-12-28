@@ -17,7 +17,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+
+    // 先修改 app/Http/Middleware/RedirectIfAuthenticated.php
+    // 在修改此处的 HOME
+    // 8.3章
+    public const HOME = '/';
+
+    // 原本的，在8.3章改为上面的
+    // public const HOME = '/home';
 
     /**
      * The controller namespace for the application.
