@@ -8,11 +8,15 @@ use Auth;
 
 class SessionsController extends Controller
 {
+    // 返回登录视图
+    // 7.2章
     public function create()
     {
         return view('sessions.create');
     }
 
+    // 会话：登录验证、认证用户身份、记住我
+    // 7.2章
     public function store(Request $request)
     {
         $credentials = $this->validate($request,[
@@ -31,9 +35,12 @@ class SessionsController extends Controller
         }
     }
 
+    // 用户退出功能
+    // 7.4章
     public function destroy(){
         Auth::logout();
         session()->flash('success','您已成功退出！');
         return redirect('login');
     }
 }
+

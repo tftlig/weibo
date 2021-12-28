@@ -1,3 +1,6 @@
+{{--用户个人中心视图--}}
+{{--6.2章--}}
+
 @extends('layouts.default')
 @section('title',$user->name)
 

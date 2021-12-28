@@ -1,3 +1,5 @@
+{{--全局通用视图-顶部部分--}}
+{{--4.5章--}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container ">
     <a class="navbar-brand" href="{{ route('home') }}">Weibo App</a>
@@ -10,7 +12,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">个人中心</a>
-            <a class="dropdown-item" href="#">编辑资料</a>
+            <a class="dropdown-item" href="{{ route('users.edit', Auth::user()) }}">编辑资料</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" id="logout" href="#">
               <form action="{{ route('logout') }}" method="POST">

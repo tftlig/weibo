@@ -12,16 +12,26 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//首页、帮助页、关于页路由
+// 首页、帮助页、关于页路由
+// 3.3章
 Route::get('/', 'StaticPagesController@home')->name('home');
 Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
-//登录路由
+
+// 注册页面路由
+// 4.7章
 Route::get('signup','UsersController@create')->name('signup');
-//用户资源自由
+
+// 用户资源路由
+//Laravel 为我们提供了 resource 方法来定义用户资源路由。
+//6.2章
 Route::resource('users','UsersController');
 
-//会话路由
+// 会话路由
+// 新增的路由分别对应会话控制器的三个动作：create, store, destroy。
+// 7.2章
 Route::get('login','SessionsController@create')->name('login');
 Route::post('login','SessionsController@store')->name('login');
 Route::delete('logout','SessionsController@destroy')->name('logout');
+
+

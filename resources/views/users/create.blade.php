@@ -1,3 +1,6 @@
+{{--用户注册表单--}}
+{{--4.7章、6.3章--}}
+
 @extends('layouts.default')
 @section('title','注册')
 

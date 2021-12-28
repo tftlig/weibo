@@ -3,7 +3,7 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    // 7.4章，用户退出登录
     require('bootstrap');
 } catch (e) {}
 
