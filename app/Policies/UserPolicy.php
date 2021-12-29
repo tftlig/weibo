@@ -29,4 +29,9 @@ class UserPolicy
         return $currentUser->id === $user->id;
     }
 
+    // 加上 destroy 删除用户动作相关的授权。8.5章
+    public function destroy(User $currentUser,User $user){
+        return $currentUser->is_admin && $currentUser->id !== $user->id;
+    }
+
 }

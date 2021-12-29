@@ -105,6 +105,14 @@ class UsersController extends Controller
         return view('users.index',compact('users'));
     }
 
+    // 为用户列表删除按钮添加删除动作  8.5章
+    public function destroy(User $user){
+        $this->authorize('destroy',$user); //添加授权，只有管理员才能操作
+        $user->delete();
+        session()->flash('success','成功删除用户！');
+        return back();
+    }
+
 }
 
 
