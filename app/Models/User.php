@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str; //引入creating方法，用于事件被创建前监听。9.2章
 
 class User extends Authenticatable
 {
@@ -34,6 +35,18 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // 添加事件创建前的监听方法，9.2章
+    public static function boot(){
+        parent::boot();
+
+        // boot 方法会在用户模型类完成初始化之后进行加载，
+        // 此我们对事件的监听需要放在该方法中。9.2章
+        static::creating(function($user){
+            $user->activation_token = Str::random(10);
+        });
+    }
+
 
     /**
      * The attributes that should be cast.

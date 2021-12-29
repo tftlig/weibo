@@ -31,7 +31,7 @@ class SessionsController extends Controller
         ]);
 
         if(Auth::attempt($credentials,$request->has('remember'))){
-            //登录成功后的相关操作
+/*             //登录成功后的相关操作
             session()->flash('success','欢迎回来！');
 
 /*             当一个未登录的用户尝试访问自己的资料编辑页面时，将会自动跳转到登录页面，
@@ -42,8 +42,20 @@ class SessionsController extends Controller
             该方法可将页面重定向到上一次请求尝试访问的页面上，并接收一个默认跳转地址参数，
             当上一次请求记录为空时，跳转到默认地址上。 */
             // 8.3章
-            $fallback = route('users.show',Auth::user());
-            return redirect()->intended($fallback);
+/*             $fallback = route('users.show',Auth::user());
+            return redirect()->intended($fallback);  */
+
+            // 9.2章，对之前的登录代码进行修改，当用户没有激活时，则视为认证失败，
+            // 用户将会被重定向至首页，并显示消息提醒去引导用户查收邮件。
+            if(Auth::user()->activated) {
+               session()->flash('success', '欢迎回来！');
+               $fallback = route('users.show', Auth::user());
+               return redirect()->intended($fallback);
+            } else {
+               Auth::logout();
+               session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+               return redirect('/');
+            }
 
         }else{
             //登录失败后的相关操作
