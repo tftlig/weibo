@@ -2,11 +2,16 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+// 模型工厂，这个模型工厂是系统自带的
+// 8.4章
 class UserFactory extends Factory
 {
+
+    protected $model = User::class;
     /**
      * Define the model's default state.
      *

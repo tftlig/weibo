@@ -15,7 +15,7 @@ class UsersController extends Controller
     // 8.3章
     public function __construct(){
         $this->middleware('auth',[
-            'except' => ['show','create','store']
+            'except' => ['show','create','store','index']
         ]);
 
         // 用 Auth 中间件提供的 guest 选项，指定一些只允许未登录用户访问的动作
@@ -93,6 +93,16 @@ class UsersController extends Controller
         session()->flash('success','个人资料更新成功');
         return redirect()->route('users.show',$user->id);
 
+    }
+
+    // 展示用户列表
+    // 8.4章
+    public function index(){
+        // 获取全部用户数据
+        // $users = User::all();
+        // 分页获取用户数据，分页器paginate()
+        $users = User::paginate(6);
+        return view('users.index',compact('users'));
     }
 
 }
