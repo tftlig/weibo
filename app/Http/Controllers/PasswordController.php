@@ -13,6 +13,21 @@ use Carbon\Carbon;
 // 9.3章  忘记密码，找回密码
 class PasswordController extends Controller
 {
+
+    // 9.6章，访问限流
+    public function __construct()
+    {
+        // 9.6章 对密码重置页面限流，1分钟两次
+        $this->middleware('throttle:2,1', [
+            'only' => ['showLinkRequestForm']
+        ]);
+        // 9.6章 限流密码重置邮件，10分钟3次
+        $this->middleware('throttle:3,10', [
+            'only' => ['sendResetLinkEmail']
+        ]);
+    }
+
+
     // 9.3章 显示找回密码的视图
     public function showLinkRequestForm(){
         return view('auth.passwords.email');
