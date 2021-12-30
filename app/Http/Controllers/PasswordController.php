@@ -18,11 +18,11 @@ class PasswordController extends Controller
     public function __construct()
     {
         // 9.6章 对密码重置页面限流，1分钟两次
-        $this->middleware('throttle:2,1', [
+        $this->middleware('throttle:20,1', [
             'only' => ['showLinkRequestForm']
         ]);
         // 9.6章 限流密码重置邮件，10分钟3次
-        $this->middleware('throttle:3,10', [
+        $this->middleware('throttle:30,10', [
             'only' => ['sendResetLinkEmail']
         ]);
     }

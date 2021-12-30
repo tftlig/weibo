@@ -19,6 +19,10 @@
         <section class="user_info">
           @include('shared._user_info', ['user' => Auth::user()])
         </section>
+        {{-- 11.3 将个人信息统计视图，引入首页 --}}
+        <section class="stats mt-2">
+          @include('shared._stats', ['user' => Auth::user()])
+        </section>
       </aside>
     </div>
   @else

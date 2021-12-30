@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
         // 10.3章 指定调用微博数据填充文件。
         $this->call(StatusesTableSeeder::class);
 
+        // 11.3章 指定调用 关注 填充文件
+        $this->call(FollowersTableSeeder::class);
+
         Model::reguard();
     }
 }

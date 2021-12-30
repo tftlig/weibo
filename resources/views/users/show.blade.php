@@ -13,6 +13,13 @@
           @include('shared._user_info', ['user' => $user])
         </section>
 
+        {{-- 11.3章  个人页面也需要显示社交统计信息，修改用户个人中心页面视图--}}
+        </section>
+        <section class="stats mt-2">
+          @include('shared._stats', ['user' => $user])
+        </section>
+        <hr>
+
         {{---10.3章 在用户的个人页面使用该局部视图和渲染微博的分页链接了--}}
         <section class="status">
           @if ($statuses->count() > 0)
