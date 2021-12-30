@@ -28,5 +28,12 @@ class StatusesController extends Controller
     }
 
 
+    // 10.6章 给微博控制器加上destory动作来处理微博的删除
+    public function destroy(Status $status){
+        $this->authorize('destroy',$status);
+        $status->delete();
+        session()->flash('success','微博已被成功删除');
+        return redirect()->back();
+    }
 
 }
