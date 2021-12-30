@@ -75,4 +75,44 @@ class User extends Authenticatable
         return $this->statuses()->orderBy('created_at','desc');
     }
 
+
+    // 11.2章 一个用户可以有多个粉丝。belongsToMany方法里的第二个参数，是关联关系表。
+    // 第三个参数（user_id） 和 第四个参数（follower_id），是关联模型在关联关系表中的外键
+    public function followers(){
+        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+    }
+
+    // 11.2章 一个粉丝，可以关注多个用户
+    public function followings(){
+        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+    }
+
+
+/*     11.2章 关注。is_array 用于判断参数是否为数组，如果已经是数组，
+    则没有必要再使用 compact 方法。我们并没有给 sync 和 detach
+    指定传递参数为用户的 id，这两个方法会自动获取数组中的 id。 */
+    public function follow($user_ids){
+        if(!is_array($user_ids)){
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->sync($user_ids,false);
+    }
+
+    // 11.2章 取消关注
+    public function unfollow($user_ids){
+        if(!is_array($user_ids)){
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->detach($user_ids);
+    }
+
+
+/*     11.2章 我们还需要一个方法用于判断当前登录的用户 A
+    是否关注了用户 B，代码实现逻辑很简单，我们只需判断用户 B
+    是否包含在用户 A 的关注人列表上即可。 */
+    // 这里我们将用到 contains 方法来做判断。
+    public function isFollowing($user_id){
+        return $this->followings->contains($user_id);
+    }
+
 }
