@@ -10,6 +10,10 @@
         <section class="status_form">
           @include('shared._status_form')
         </section>
+        {{-- 10.5章 微博动态流局部视图，显示到主页上 --}}
+        <h4>微博列表</h4>
+        <hr>
+        @include('shared._feed')
       </div>
       <aside class="col-md-4">
         <section class="user_info">

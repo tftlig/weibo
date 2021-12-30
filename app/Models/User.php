@@ -70,4 +70,9 @@ class User extends Authenticatable
     }
 
 
+    // 10.5章 实现在微博发布表单下，显示已发微博，并按时间倒序排
+    public function feed(){
+        return $this->statuses()->orderBy('created_at','desc');
+    }
+
 }
