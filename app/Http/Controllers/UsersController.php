@@ -37,11 +37,24 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    // 展示用户个人中心
-    // 6.2章
+
     public function show(User $user){
-        return view('users.show',compact('user'));
+        // 展示用户个人中心
+        // 6.2章
+        // return view('users.show',compact('user'));
+
+        // 为用户控制器的show动作添加微博动态的读取逻辑
+        // 10.2章
+        $statuses = $user->statuses()->orderBy('created_at','desc')->paginate(10);
+
+        return view('users.show',compact('user','statuses'));
+        /* compact 方法可以同时接收多个参数，
+        在上面代码我们将用户数据 $user 和微博动态数据 $statuses 同时传递给用户个人页面的视图上。 */
     }
+
+
+
+
 
     // 验证注册信息，保存注册信息到数据库
     // 注册后自动登录,显示欢迎信息，和重新到个人中心
@@ -152,6 +165,10 @@ class UsersController extends Controller
         session()->flash('success', '恭喜你，激活成功！');
         return redirect()->route('users.show', [$user]);
     }
+
+
+
+
 
 }
 
