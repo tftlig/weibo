@@ -61,4 +61,13 @@ class User extends Authenticatable
         // $hash = md5(strtolower(trim($this->attributes['email'])));
         return "https://bookcover.yuewen.com/qdbimg/349573/1020180183/180";
     }
+
+
+    // 在用户模型中，指明一个用户拥有多条微博。
+    // 10.2章
+    public function statuses(){
+        return $this->hasMany(Status::class);
+    }
+
+
 }
