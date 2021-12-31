@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str; //引入creating方法，用于事件被创建前监听。9.2章
+use Auth;
 
 class User extends Authenticatable
 {
@@ -72,7 +73,13 @@ class User extends Authenticatable
 
     // 10.5章 实现在微博发布表单下，显示已发微博，并按时间倒序排
     public function feed(){
-        return $this->statuses()->orderBy('created_at','desc');
+        // return $this->statuses()->orderBy('created_at','desc');
+
+        // 11.6章调整：微博动态里，把自己的和关注人的微博动态显示出来
+        $user_ids = $this->followings->pluck('id')->toArray();
+        array_push($user_ids,$this->id);
+
+        return Status::whereIn('user_id',$user_ids)->with('user')->orderBy('created_at','desc');
     }
 
 
