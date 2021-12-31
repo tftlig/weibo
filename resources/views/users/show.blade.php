@@ -13,8 +13,12 @@
           @include('shared._user_info', ['user' => $user])
         </section>
 
+        {{-- 为用户个人页面添加关注表单和信息统计视图 --}}
+        @if (Auth::check())
+          @include('users._follow_form')
+        @endif
+
         {{-- 11.3章  个人页面也需要显示社交统计信息，修改用户个人中心页面视图--}}
-        </section>
         <section class="stats mt-2">
           @include('shared._stats', ['user' => $user])
         </section>
