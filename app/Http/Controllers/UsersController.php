@@ -53,9 +53,6 @@ class UsersController extends Controller
     }
 
 
-
-
-
     // 验证注册信息，保存注册信息到数据库
     // 注册后自动登录,显示欢迎信息，和重新到个人中心
     // 6.6章
@@ -167,8 +164,19 @@ class UsersController extends Controller
     }
 
 
+    // 11.4章 用于显示用户关注人列表视图的followings方法
+    public function followings(User $user){
+        $users = $user->followings()->paginate(30);
+        $title = $user->name . '关注的人';
+        return view('users.show_follow',compact('users','title'));
+    }
 
-
+    // 11.4章 用于显示粉丝列表视图的followers方法
+    public function followers(User $user){
+        $users = $user->followers()->paginate(30);
+        $title = $user->name . '的粉丝';
+        return view('users.show_follow',compact('users','title'));
+    }
 
 }
 

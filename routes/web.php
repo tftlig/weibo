@@ -48,3 +48,7 @@ Route::post('password/reset',  'PasswordController@reset')->name('password.updat
 Route::resource('statuses','StatusesController',['only' => ['store','destroy']]);
 
 
+// 11.4章 关注者列表和粉丝列表路由
+Route::get('/users/{user}/followings','UsersController@followings')->name('users.followings');
+Route::get('/users/{user}/followers','UsersController@followers')->name('users.followers');
+
